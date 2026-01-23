@@ -1,12 +1,14 @@
-type TransactionType = "income" | "expense"
+type TransactionIE = "income" | "expense"
 type ISODateString = string
 
+export type TransactionList = {
 
-export type Transaction = {
+}
+export type TransactionType = {
     id: string,
     description: string, 
     value: number,
-    type: TransactionType,
+    type: TransactionIE,
     category: string, 
     dataTransaction: ISODateString,
     dataCreate: ISODateString

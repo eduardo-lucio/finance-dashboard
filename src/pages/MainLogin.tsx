@@ -1,14 +1,17 @@
 import {useState} from "react";
 import {useAuth} from "../contexts/AuthContext.tsx";
+import {Navigate, useNavigate} from "react-router-dom";
 
 
 export function MainLogin(){
-    const { login } = useAuth()
+    const { isAuthenticated, login } = useAuth()
     const [form, setForm] = useState({
         email: "",
         password: ""
     })
+    const navigate = useNavigate()
     const [error, setError] = useState("")
+    if (isAuthenticated) return <Navigate to="/dashboard" />
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
 
@@ -24,6 +27,7 @@ export function MainLogin(){
 
         try{
             login(form.email, form.password)
+            navigate("/dashboard")
         }catch(error: unknown){
             setError((error as Error).message)
             return
