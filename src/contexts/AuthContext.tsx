@@ -5,7 +5,7 @@ type AuthProviderProps = {
     children: React.ReactNode
 }
 
-export const AuthContext = createContext<AuthContextData>(
+const AuthContext = createContext<AuthContextData>(
     {} as AuthContextData
 )
 
