@@ -13,10 +13,10 @@ export function useAuth(){
     return useContext(AuthContext) // cria um hook para usar o contexto de maneira mais limpa
 }
 export function AuthProvider({ children }: AuthProviderProps){
-        const [user, setUser] = useState<User | null>(()=>{
-            const userData = localStorage.getItem("user")
-            return userData ? JSON.parse(userData) : null
-        })
+    const [user, setUser] = useState<User | null>(()=>{
+        const userData = localStorage.getItem("user")
+        return userData ? JSON.parse(userData) : null
+    })
 
     const isAuthenticated = !!user // !! força o valor a se tornar um booleano, logo se existe usuario é true se for null é false
     function login(email: string, password: string) {

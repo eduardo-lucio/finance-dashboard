@@ -1,9 +1,6 @@
 type TransactionIE = "income" | "expense"
 type ISODateString = string
 
-export type TransactionList = {
-
-}
 export type TransactionType = {
     id: string,
     description: string, 

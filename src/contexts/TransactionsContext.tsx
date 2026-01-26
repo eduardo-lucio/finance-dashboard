@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import type {TransactionList, TransactionType} from "../types/transaction.ts";
+import type {TransactionType} from "../types/transaction.ts";
 import {useAuth} from "./AuthContext.tsx";
 
 type TransactionsContextProps = {
