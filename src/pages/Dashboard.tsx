@@ -10,6 +10,7 @@ import {
     monthIncome,
     totalMoney
 } from "../functions/calcValues.ts";
+import {CalcPercent} from "../components/CalcPercent.tsx";
 
 
 export function Dashboard(){
@@ -28,7 +29,7 @@ export function Dashboard(){
                     <h2>Patrimônio total: <span>R${totalMoney(jsonStoredTransactions)}</span></h2>
                 </div>
                 <div className={`${cardStyle}`}>
-                    <h2>Receita mensal: <span>R${monthIncome(jsonStoredTransactions)}</span></h2>
+                    <h2>Receita mensal: <span>R${monthIncome(jsonStoredTransactions)}<CalcPercent currentValue={monthIncome(jsonStoredTransactions)} lastMonthValue={lastMonthIncome(jsonStoredTransactions)} />{}</span></h2>
                     <h3>Receita do mês anterior: <span>R${lastMonthIncome(jsonStoredTransactions)}</span></h3>
                 </div>
                 <div className={`${cardStyle}`}>

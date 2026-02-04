@@ -87,7 +87,7 @@ export function monthBal(jsonStoredTransactions: TransactionType[]){
         const itemMonth = dataTransaction.getMonth()
         const itemYear = dataTransaction.getFullYear()
         if(month === itemMonth && year === itemYear){
-            if(item.type === "expense"){
+            if(item.type === "income"){
                 total+=item.value
             }else{
                 total-=item.value

@@ -84,8 +84,7 @@ export function AddTransaction({ setIsOpen }:{setIsOpen: React.Dispatch<React.Se
                             <option value="" disabled>Selecione uma categoria</option>
                             {renderOptions(form.type)}
                         </select>
-
-                        <label htmlFor={"value"}>R$</label><input className={"[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:ring-2 focus:ring-[#202020] rounded-md flex-1 outline-0"} id={"value"} placeholder={"Valor"} value={form.value === 0 ? "" : form.value} onChange={(e)=> setForm(prev => ({...prev, value: Number(e.target.value)}))} type="number"></input>
+                        <label htmlFor={"value"}>R$</label><input className={"min-w-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:ring-2 focus:ring-[#202020] rounded-md flex-1 outline-0"} min={0} id={"value"} placeholder={"Valor"} value={form.value === 0 ? "" : form.value} onChange={(e)=> setForm(prev => ({...prev, value: Number(e.target.value)}))} type="number"></input>
                     </div>
                     <input className={"focus:ring-2 focus:ring-[#202020] rounded-md outline-0 cursor-pointer p-1 w-full mb-2 scheme-dark"} type="date" value={form.dataTransaction} onChange={(e)=>setForm(prev => ({...prev, dataTransaction: e.target.value}))}></input>
                     <p className={"m-1"}>{warn}</p>
