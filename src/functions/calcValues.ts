@@ -7,6 +7,7 @@ const rangeMonth = month === 0 ? 11 : month-1
 const rangeYear = rangeMonth === 11 ? year-1 : year
 
 export function totalMoney(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         if(item.type === "income"){
@@ -18,6 +19,7 @@ export function totalMoney(jsonStoredTransactions: TransactionType[]){
     return total
 }
 export function lastMonthIncome(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)
@@ -32,6 +34,7 @@ export function lastMonthIncome(jsonStoredTransactions: TransactionType[]){
     return total
 }
 export function monthIncome(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)
@@ -46,6 +49,7 @@ export function monthIncome(jsonStoredTransactions: TransactionType[]){
     return total
 }
 export function lastMonthExpense(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)
@@ -60,6 +64,7 @@ export function lastMonthExpense(jsonStoredTransactions: TransactionType[]){
     return total
 }
 export function monthExpense(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)
@@ -75,6 +80,7 @@ export function monthExpense(jsonStoredTransactions: TransactionType[]){
 }
 
 export function monthBal(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)
@@ -92,6 +98,7 @@ export function monthBal(jsonStoredTransactions: TransactionType[]){
 }
 
 export function lastMonthBal(jsonStoredTransactions: TransactionType[]){
+    if(jsonStoredTransactions === null) return 0
     let total = 0;
     jsonStoredTransactions.forEach(item=>{
         const dataTransaction = new Date(item.dataTransaction)

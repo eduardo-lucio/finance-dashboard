@@ -10,7 +10,7 @@ const AuthContext = createContext<AuthContextData>(
 )
 
 export function useAuth(){
-    return useContext(AuthContext) // cria um hook para usar o contexto de maneira mais limpa
+    return useContext(AuthContext)
 }
 export function AuthProvider({ children }: AuthProviderProps){
     const [user, setUser] = useState<User | null>(()=>{
