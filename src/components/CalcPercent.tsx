@@ -1,12 +1,20 @@
-export function CalcPercent({lastMonthValue, currentValue}: {lastMonthValue: number, currentValue: number}) {
+import {ChevronRight, TrendingUp, TrendingDown} from "lucide-react";
 
-    const difference = () => {
-        if(currentValue > lastMonthValue){
-            return (currentValue/lastMonthValue)*100-100
-        }else if(currentValue < lastMonthValue){
-            return -((lastMonthValue - currentValue)/lastMonthValue)*100
+export function CalcPercent({lastMonthValue, currentValue}: {lastMonthValue: number, currentValue: number}) {
+    function calcDiff() {
+        if (lastMonthValue === 0) return
+2000.00%) return currentValue === 0 ? 0 : 100
+        return ((currentValue - lastMonthValue) / lastMonthValue) * 100
+    }
+    const difference = calcDiff()
+
+    function setIcon(){
+        if(difference > 0){
+            return <TrendingUp />
+        }else if(difference < 0){
+            return <TrendingDown />
         }
-        return 0;
+        return <ChevronRight />
     }
     function setStyle(){
         if(difference === 0){
@@ -17,13 +25,10 @@ export function CalcPercent({lastMonthValue, currentValue}: {lastMonthValue: num
         }
         return "bg-blue-400";
     }
-    const positiveStyle = ""
-    const negativeStyle = ""
-    const neutralStyle = ""
     return(
         <div>
-            <span className={""}>
-                <span>{difference().toFixed(2)}%</span>
+            <span className={`${setStyle()}`}>
+                <span>{difference.toFixed(2)}%{setIcon()}</span>
             </span>
         </div>
     )
