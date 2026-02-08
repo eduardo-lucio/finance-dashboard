@@ -2,37 +2,11 @@ import {useTransactions} from "../contexts/TransactionsContext.tsx";
 import {useState} from "react";
 import type {TransactionType} from "../types/transaction.ts";
 import {X} from 'lucide-react'
+import {RenderOptions} from "./RenderOptions.tsx";
 
 export function AddTransaction({ setIsOpen }:{setIsOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const {createTransaction} = useTransactions()
-    const categories = {
-        income: [
-            "Salário",
-            "Freelance",
-            "Investimentos",
-            "Outros"
-        ],
-        expense: [
-            "Alimentação",
-            "Moradia",
-            "Transporte",
-            "Lazer",
-            "Saúde",
-            "Educação",
-            "Contas",
-            "Outros"
-        ]
-    }
-    function renderOptions(option: "income" | "expense"){
-        if(option === "income" || option === "expense"){
-            return categories[option].map(name=>{
-                    return(
-                        <option key={name}>{name}</option>
-                    )
-                }
-            )
-        }
-    }
+
     function handleSubmit(e: React.FormEvent){
         e.preventDefault()
         if(!form.description){
@@ -82,7 +56,7 @@ export function AddTransaction({ setIsOpen }:{setIsOpen: React.Dispatch<React.Se
                     <div className={"mb-2 flex gap-2"}>
                         <select className={"flex-1 outline-0 cursor-pointer"} value={form.category} onChange={(e)=> setForm(prev => ({...prev, category: e.target.value}))}>
                             <option value="" disabled>Selecione uma categoria</option>
-                            {renderOptions(form.type)}
+                            <RenderOptions option={form.type} />
                         </select>
                         <label htmlFor={"value"}>R$</label><input className={"min-w-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:ring-2 focus:ring-[#202020] rounded-md flex-1 outline-0"} min={0} id={"value"} placeholder={"Valor"} value={form.value === 0 ? "" : form.value} onChange={(e)=> setForm(prev => ({...prev, value: Number(e.target.value)}))} type="number"></input>
                     </div>
