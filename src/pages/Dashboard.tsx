@@ -1,6 +1,5 @@
 import {AddTransaction} from "../components/AddTransaction.tsx";
 import {useState} from "react";
-import {useAuth} from "../contexts/AuthContext.tsx";
 import {
     lastMonthBal,
     lastMonthExpense,
@@ -29,7 +28,7 @@ export function Dashboard(){
     const lastMonthBalV = lastMonthBal(transactions)
     console.log(transactions)
     return(
-        <div className={"h-dvh bg-[#202020]"}>
+        <div className={"h-dvh"}>
             <div className={"p-2 text-white bg-[#202020] flex outline outline-[#3c4147] rounded-md gap-5 justify-around w-full"}>
                 <div className={`${cardStyle}`}>
                     <h2>Patrimônio total: <span>R${totalMoneyV}</span></h2>
@@ -49,7 +48,7 @@ export function Dashboard(){
             </div>
             <button className={`${outline} p-3 text-white bg-[#202020] rounded-md cursor-pointer`} onClick={()=> setIsOpen(true)}>Adicionar lançamento</button>
             <div>
-                <h2>Histórico de lançamentos</h2>
+                <h2 className={"text-2xl text-center"}>Histórico de lançamentos</h2>
                 <TransactionsTable></TransactionsTable>
             </div>
             {isOpen && <AddTransaction setIsOpen={setIsOpen}/>}
