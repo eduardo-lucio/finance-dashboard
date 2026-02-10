@@ -18,7 +18,7 @@ export function Dashboard(){
     const [isOpen, setIsOpen] = useState(false)
     const {transactions} = useTransactions()
     const outline = "outline outline-[#3c4147]"
-    const cardStyle = "bg-[#393938] rounded-md p-4"
+    const cardStyle = "bg-[#393938] rounded-md p-4 outline-1 outline-[#3c4147]"
     const totalMoneyV = totalMoney(transactions)
     const monthIncomeV = monthIncome(transactions)
     const lastMonthIncomeV = lastMonthIncome(transactions)
@@ -28,7 +28,7 @@ export function Dashboard(){
     const lastMonthBalV = lastMonthBal(transactions)
     console.log(transactions)
     return(
-        <div className={"h-dvh"}>
+        <div className={"h-full bg-black"}>
             <div className={"p-2 text-white bg-[#202020] flex outline outline-[#3c4147] rounded-md gap-5 justify-around w-full"}>
                 <div className={`${cardStyle}`}>
                     <h2>Patrimônio total: <span>R${totalMoneyV}</span></h2>
@@ -48,7 +48,7 @@ export function Dashboard(){
             </div>
             <button className={`${outline} p-3 text-white bg-[#202020] rounded-md cursor-pointer`} onClick={()=> setIsOpen(true)}>Adicionar lançamento</button>
             <div>
-                <h2 className={"text-2xl text-center"}>Histórico de lançamentos</h2>
+                <h2 className={"text-[#aca9a3] text-2xl text-center"}>Histórico de lançamentos</h2>
                 <TransactionsTable></TransactionsTable>
             </div>
             {isOpen && <AddTransaction setIsOpen={setIsOpen}/>}

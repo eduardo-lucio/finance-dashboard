@@ -113,9 +113,9 @@ export function TransactionsTable() {
         }
     }
     return (
-        <div className={"outline outline-zinc-600"}>
-            <div className={" rounded-t-md m-auto w-95/100 p-2 bg-[#202020] text-[#aca9a3]"}>
-                <h3 className={"text-xl text-center"}>Filtros</h3>
+        <div className={""}>
+            <div className={"border-t border-r border-l border-[#3c4147] rounded-t-md m-auto w-95/100 p-2 bg-[#202020] text-[#aca9a3]"}>
+                <h3 className={"select-none p-1 text-xl text-center font-bold"}>Filtros</h3>
                 <div className={"flex flex-wrap justify-between"}>
                     <input value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
                            onChange={e=>
@@ -123,11 +123,13 @@ export function TransactionsTable() {
                     </input>
                     <select value={filterState.type} onChange={e=> {table.getColumn("type")?.setFilterValue(e.target.value === "" ? undefined : e.target.value)
                         setFilterState(prev=>({...prev, type:e.target.value as "income" | "expense" | ""}))}}>
+                        <option disabled value={""}>Selecione um Tipo</option>
                         <option value={""}>Mostrar todos</option>
                         <option value={"income"}>Receita</option>
                         <option value={"expense"}>Despesa</option>
                     </select>
                     <select className={"scheme-dark"} onChange={e=> {table.getColumn("category")?.setFilterValue(e.target.value === "" ? undefined : e.target.value)}}>
+                        <option disabled value={""}>Selecione uma categoria</option>
                         <option value={""}>Mostrar todos</option>
                         <RenderOptions option={filterState.type}></RenderOptions>
                     </select>
@@ -141,43 +143,42 @@ export function TransactionsTable() {
                     }></input>
                     <button onClick={()=> {setFilterState(prev=> ({...prev, data: ""}))
                         table.getColumn("dataTransaction")?.setFilterValue(undefined)
-                    }}>Limpar data</button>
-
+                    }} className={"cursor-pointer"}>Limpar data</button>
                     <input placeholder={"ID"} onChange={e=> {table.getColumn("id")?.setFilterValue(e.target.value)}}></input>
                 </div>
             </div>
-            <div className={"m-auto w-95/100 overflow-hidden rounded-b-md"}>
+            <div className={"border-b border-r border-l border-[#3c4147] m-auto w-95/100 rounded-b-md"}>
                 <table className={"w-full border-collapse"}>
                     <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr className={"sticky bg-[#202020]"} key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
-                                <th onClick={header.column.getCanSort() ? ()=> {
-                                    const col = header.column
-                                    const s = col.getIsSorted()
-                                    if (!s) col.toggleSorting(false)
-                                    else if(s=== "asc") col.toggleSorting(true)
-                                    else col.clearSorting()
-                                    console.log(s)
-                                } : undefined}
-                                    style={{ width: header.column.columnDef.meta?.width }}
-                                    className={"sticky px-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
-                                    <span className={"cursor-pointer select-none inline-flex items-center gap-2"}>{flexRender(header.column.columnDef.header, header.getContext())}{header.column.getCanSort() ? getIcon(header.column.getIsSorted()) : ""}</span>
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr className={"   bg-[#202020]"} key={headerGroup.id}>
+                                {headerGroup.headers.map(header => (
+                                    <th onClick={header.column.getCanSort() ? ()=> {
+                                        const col = header.column
+                                        const s = col.getIsSorted()
+                                        if (!s) col.toggleSorting(false)
+                                        else if(s=== "asc") col.toggleSorting(true)
+                                        else col.clearSorting()
+                                        console.log(s)
+                                    } : undefined}
+                                        style={{ width: header.column.columnDef.meta?.width }}
+                                        className={"sticky top-0 z-20 x-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
+                                        <span className={"cursor-pointer select-none inline-flex items-center gap-2"}>{flexRender(header.column.columnDef.header, header.getContext())}{header.column.getCanSort() ? getIcon(header.column.getIsSorted()) : ""}</span>
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
                     </thead>
-                    <tbody className={""}>
-                    {table.getRowModel().rows.map((row) => (
-                        <tr className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
-                            {row.getVisibleCells().map(cell=> (
-                                <td style={{ width: cell.column.columnDef.meta?.width }} className={`px-4 py-2 text-white text-sm border border-black font-semibold ${cell.column.columnDef.meta?.align === "right" ? "text-right" : "text-left"}`} key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
+                                {row.getVisibleCells().map(cell=> (
+                                    <td style={{ width: cell.column.columnDef.meta?.width }} className={`px-4 py-2 text-white text-sm border border-black font-semibold ${cell.column.columnDef.meta?.align === "right" ? "text-right" : "text-left"}`} key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
