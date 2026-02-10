@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import {useState} from "react";
 import {RenderOptions} from "./RenderOptions.tsx";
-import {ChevronDown, ChevronUp} from "lucide-react";
+import {ChevronDown, ChevronRight, ChevronUp} from "lucide-react";
 
 export function TransactionsTable() {
     const [sorting, setSorting] = useState<SortingState>([])
@@ -81,6 +81,7 @@ export function TransactionsTable() {
         {
             accessorKey: "id",
             header: "Id",
+            enableSorting: false,
             meta: {
                 width: "200px"
             }
@@ -99,11 +100,21 @@ export function TransactionsTable() {
             onColumnFiltersChange: setColumnsFilters,
             getFilteredRowModel: getFilteredRowModel(),
         },
-
     )
+    function getIcon(arg: "asc" | "desc" | false){
+        if(arg === "asc"){
+            return <ChevronUp size={18}/>
+        }
+        if(arg === "desc"){
+            return <ChevronDown size={18}/>
+        }
+        if(!arg){
+            return <ChevronRight size={18}/>
+        }
+    }
     return (
-        <div className={""}>
-            <div className={"p-2 bg-[#202020] text-[#aca9a3]"}>
+        <div className={"outline outline-zinc-600"}>
+            <div className={" rounded-t-md m-auto w-95/100 p-2 bg-[#202020] text-[#aca9a3]"}>
                 <h3 className={"text-xl text-center"}>Filtros</h3>
                 <div className={"flex flex-wrap justify-between"}>
                     <input value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
@@ -135,39 +146,41 @@ export function TransactionsTable() {
                     <input placeholder={"ID"} onChange={e=> {table.getColumn("id")?.setFilterValue(e.target.value)}}></input>
                 </div>
             </div>
-
-            <table className={"w-full border-collapse"}>
-                <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <tr className={"sticky bg-[#202020]"} key={headerGroup.id}>
-                        {headerGroup.headers.map(header => (
-                            <th onClick={()=> {
-                                const col = header.column
-                                const s = col.getIsSorted()
-                                if (!s) col.toggleSorting(false)
-                                else if(s=== "asc") col.toggleSorting(true)
-                                else col.clearSorting()
-                            }}
-                                style={{ width: header.column.columnDef.meta?.width }}
-                                className={"sticky px-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
-                                {flexRender(header.column.columnDef.header, header.getContext())} {}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody>
-                {table.getRowModel().rows.map((row) => (
-                    <tr className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
-                        {row.getVisibleCells().map(cell=> (
-                            <td style={{ width: cell.column.columnDef.meta?.width }} className={`px-4 py-2   text-white text-sm border border-black font-semibold ${cell.column.columnDef.meta?.align === "right" ? "text-right" : "text-left"}`} key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            <div className={"m-auto w-95/100 overflow-hidden rounded-b-md"}>
+                <table className={"w-full border-collapse"}>
+                    <thead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <tr className={"sticky bg-[#202020]"} key={headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <th onClick={header.column.getCanSort() ? ()=> {
+                                    const col = header.column
+                                    const s = col.getIsSorted()
+                                    if (!s) col.toggleSorting(false)
+                                    else if(s=== "asc") col.toggleSorting(true)
+                                    else col.clearSorting()
+                                    console.log(s)
+                                } : undefined}
+                                    style={{ width: header.column.columnDef.meta?.width }}
+                                    className={"sticky px-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
+                                    <span className={"cursor-pointer select-none inline-flex items-center gap-2"}>{flexRender(header.column.columnDef.header, header.getContext())}{header.column.getCanSort() ? getIcon(header.column.getIsSorted()) : ""}</span>
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                    </thead>
+                    <tbody className={""}>
+                    {table.getRowModel().rows.map((row) => (
+                        <tr className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
+                            {row.getVisibleCells().map(cell=> (
+                                <td style={{ width: cell.column.columnDef.meta?.width }} className={`px-4 py-2 text-white text-sm border border-black font-semibold ${cell.column.columnDef.meta?.align === "right" ? "text-right" : "text-left"}`} key={cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     )

@@ -40,7 +40,7 @@ export function TransactionsProvider({ children }: TransactionsContextProps){
         const newTransaction = {
             ...data,
             id: crypto.randomUUID(),
-            dataCreate: (new Date()).toISOString()
+            dataCreate: (new Date()).toISOString().split('T')[0]
         }
         setTransactions(prev=>{
             const newT = [...prev, newTransaction]
