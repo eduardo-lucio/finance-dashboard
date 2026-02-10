@@ -1,16 +1,18 @@
 import {useTransactions} from "../contexts/TransactionsContext.tsx";
 import {
-flexRender,
-getCoreRowModel,
-getFilteredRowModel,
-useReactTable,
-type ColumnFiltersState,
-type FilterFn
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    useReactTable,
+    type ColumnFiltersState,
+    type FilterFn, type SortingState, getSortedRowModel
 } from "@tanstack/react-table";
 import {useState} from "react";
 import {RenderOptions} from "./RenderOptions.tsx";
+import {ChevronDown, ChevronUp} from "lucide-react";
 
 export function TransactionsTable() {
+    const [sorting, setSorting] = useState<SortingState>([])
     function formatCurrency(value: number) {
             return Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(value)
     }
@@ -81,7 +83,7 @@ export function TransactionsTable() {
             header: "Id",
             meta: {
                 width: "200px"
-            },
+            }
         }
     ]
     const table = useReactTable(
@@ -89,8 +91,10 @@ export function TransactionsTable() {
             data: transactions,
             columns,
             state: {
-                columnFilters,
+                columnFilters, sorting
             },
+            onSortingChange: setSorting,
+            getSortedRowModel: getSortedRowModel(),
             getCoreRowModel: getCoreRowModel(),
             onColumnFiltersChange: setColumnsFilters,
             getFilteredRowModel: getFilteredRowModel(),
@@ -135,11 +139,18 @@ export function TransactionsTable() {
             <table className={"w-full border-collapse"}>
                 <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
-                    <tr className={"bg-[#202020]"} key={headerGroup.id}>
+                    <tr className={"sticky bg-[#202020]"} key={headerGroup.id}>
                         {headerGroup.headers.map(header => (
-                            <th style={{ width: header.column.columnDef.meta?.width }}
-                                className={"px-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
-                                {flexRender(header.column.columnDef.header, header.getContext())}
+                            <th onClick={()=> {
+                                const col = header.column
+                                const s = col.getIsSorted()
+                                if (!s) col.toggleSorting(false)
+                                else if(s=== "asc") col.toggleSorting(true)
+                                else col.clearSorting()
+                            }}
+                                style={{ width: header.column.columnDef.meta?.width }}
+                                className={"sticky px-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
+                                {flexRender(header.column.columnDef.header, header.getContext())} {}
                             </th>
                         ))}
                     </tr>
