@@ -162,7 +162,7 @@ export function TransactionsTable() {
                                         console.log(s)
                                     } : undefined}
                                         style={{ width: header.column.columnDef.meta?.width }}
-                                        className={"sticky top-0 z-20 x-4 py-2 text-white text-sm border border-black font-semibold"} key={header.id}>
+                                        className={"sticky bg-[#202020] top-0 z-20 x-4 py-4 text-white text-sm border border-black font-semibold"} key={header.id}>
                                         <span className={"cursor-pointer select-none inline-flex items-center gap-2"}>{flexRender(header.column.columnDef.header, header.getContext())}{header.column.getCanSort() ? getIcon(header.column.getIsSorted()) : ""}</span>
                                     </th>
                                 ))}
