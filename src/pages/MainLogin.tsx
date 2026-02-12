@@ -44,14 +44,14 @@ export function MainLogin(){
             <section className={"flex flex-col items-center justify-center w-sm rounded-md bg-[#181818] outline outline-[#3c4147]"}>
                 <h1 className={"p-2 font-semibold text-2xl text-white"}>Login</h1>
                 <form onSubmit={handleSubmit} className={"flex flex-col w-80/100"}>
-                    <div className={"flex flex-col bg-[#202020] p-2 rounded-md focus-within:bg-[#393938] transition-colors duration-500 mb-3"}>
+                    <div className={"flex flex-col bg-[#202020] p-2 rounded-md focus-within:bg-[#393938] transition-colors duration-500 mb-4"}>
                         <label className={"text-[#aca9a3]"} htmlFor="email">Login</label><input className={" focus:outline-0 text-white"} id="email" placeholder={"seuemail@email.com"} onChange={(e)=> setForm(prev => ({...prev, email: e.target.value}))} value={form.email} type="text"></input>
                     </div>
-                    <div className={"flex flex-col bg-[#202020] p-2 rounded-md focus-within:bg-[#393938] transition-colors duration-500 mb-3"}>
+                    <div className={"flex flex-col bg-[#202020] p-2 rounded-md focus-within:bg-[#393938] transition-colors duration-500 mb-4"}>
                         <label className={"text-[#aca9a3]"} htmlFor="password">Password:</label><input className={"focus:outline-0 text-white"} id="password" placeholder={"********"} onChange={(e)=> setForm(prev => ({...prev, password: e.target.value}))} value={form.password} type="password"></input>
                     </div>
                     <p className={"text-[#aca9a3]"}>{error}</p>
-                    <button type="submit" className={"cursor-pointer bg-[#d3d3d3] rounded-md p-1 mb-3"}>Entrar</button>
+                    <button type="submit" className={"cursor-pointer bg-[#d3d3d3] rounded-md p-2 mb-4"}>Entrar</button>
                 </form>
             </section>
         </div>

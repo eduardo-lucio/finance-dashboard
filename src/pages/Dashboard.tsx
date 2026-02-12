@@ -48,7 +48,7 @@ export function Dashboard(){
             </div>
             <button className={`${outline} p-3 text-white bg-[#202020] rounded-md cursor-pointer`} onClick={()=> setIsOpen(true)}>Adicionar lançamento</button>
             <div>
-                <h2 className={"text-[#aca9a3] text-2xl text-center"}>Histórico de lançamentos</h2>
+
                 <TransactionsTable></TransactionsTable>
             </div>
             {isOpen && <AddTransaction setIsOpen={setIsOpen}/>}

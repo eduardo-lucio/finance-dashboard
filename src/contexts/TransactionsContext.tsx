@@ -35,20 +35,28 @@ export function TransactionsProvider({ children }: TransactionsContextProps){
         }
     }, [user])
 
-    function createTransaction(data: Omit<TransactionType, "id" | "dataCreate">){
-        if(!user) return
+    function createTransaction(data: Omit<TransactionType, "id" | "dataCreate">) {
+        if (!user) return
         const newTransaction = {
             ...data,
             id: crypto.randomUUID(),
             dataCreate: (new Date()).toISOString().split('T')[0]
         }
-        setTransactions(prev=>{
+        setTransactions(prev => {
             const newT = [...prev, newTransaction]
             localStorage.setItem(`transactions_${user.id}`, JSON.stringify(newT))
             return newT
         })
     }
-    return <TransactionsContext.Provider value={{transactions, createTransaction}}>
+    function deleteTransaction(transactionID: string): void{
+        if (!user) return
+        setTransactions(prev => {
+            const newT = prev.filter(item => item.id !== transactionID)
+            localStorage.setItem(`transactions_${user.id}`, JSON.stringify(newT))
+            return newT
+        })
+    }
+    return <TransactionsContext.Provider value={{transactions, createTransaction, deleteTransaction}}>
         {children}
     </TransactionsContext.Provider>
 }

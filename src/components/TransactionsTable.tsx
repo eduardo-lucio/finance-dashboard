@@ -9,9 +9,10 @@ import {
 } from "@tanstack/react-table";
 import {useState} from "react";
 import {RenderOptions} from "./RenderOptions.tsx";
-import {ChevronDown, ChevronRight, ChevronUp} from "lucide-react";
+import {ChevronDown, ChevronRight, ChevronUp, Trash2} from "lucide-react";
 
 export function TransactionsTable() {
+    const {deleteTransaction} = useTransactions();
     const [sorting, setSorting] = useState<SortingState>([])
     function formatCurrency(value: number) {
             return Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(value)
@@ -85,6 +86,22 @@ export function TransactionsTable() {
             meta: {
                 width: "200px"
             }
+        },
+        {
+            id: "delete",
+            header: "Excluir",
+            enableSorting: false,
+            meta:{
+                width: "10px"
+            },
+            cell: ({ row }: any) => {
+                const transaction = row.original
+                return (
+                    <button className={"w-full flex justify-center text-red-500 cursor-pointer"} onClick={()=> deleteTransaction(transaction.id)}>
+                        <Trash2 size={18}/>
+                    </button>
+                )
+            }
         }
     ]
     const table = useReactTable(
@@ -115,6 +132,7 @@ export function TransactionsTable() {
     return (
         <div className={""}>
             <div className={"border-t border-r border-l border-[#3c4147] rounded-t-md m-auto w-95/100 p-2 bg-[#202020] text-[#aca9a3]"}>
+                <h2 className={"text-[#aca9a3] text-2xl text-center font-bold"}>Histórico de lançamentos</h2>
                 <h3 className={"select-none p-1 text-xl text-center font-bold"}>Filtros</h3>
                 <div className={"flex flex-wrap justify-between"}>
                     <input value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
@@ -171,7 +189,8 @@ export function TransactionsTable() {
                     </thead>
                     <tbody>
                         {table.getRowModel().rows.map((row) => (
-                            <tr className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
+                            <tr
+                                className={"even:bg-[#202020] odd:bg-[#393938]"} key={row.id}>
                                 {row.getVisibleCells().map(cell=> (
                                     <td style={{ width: cell.column.columnDef.meta?.width }} className={`px-4 py-2 text-white text-sm border border-black font-semibold ${cell.column.columnDef.meta?.align === "right" ? "text-right" : "text-left"}`} key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
